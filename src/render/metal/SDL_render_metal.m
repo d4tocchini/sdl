@@ -1761,6 +1761,10 @@ METAL_CreateRenderer(SDL_Window * window, Uint32 flags)
 
     layer.device = mtldevice;
 
+    // D4:
+    layer.opaque = false;
+    // self.layer.backgroundColor = [NSColor clearColor].CGColor;
+
     /* Necessary for RenderReadPixels. */
     layer.framebufferOnly = NO;
 

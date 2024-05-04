@@ -1530,10 +1530,20 @@ Cocoa_SendMouseButtonClicks(SDL_Mouse * mouse, NSEvent *theEvent, SDL_Window * w
        white until the app is ready to draw. In practice on modern macOS, this
        only gets called for window creation and other extraordinary events. */
     if ([NSGraphicsContext currentContext]) {
-        [[NSColor blackColor] setFill];
+        
+        // D4
+        // [[NSColor blackColor] setFill];
+        [[NSColor windowBackgroundColor] set];
+        //
+
         NSRectFill(dirtyRect);
     } else if (self.layer) {
-        self.layer.backgroundColor = CGColorGetConstantColor(kCGColorBlack);
+        
+        // D4
+        // self.layer.backgroundColor = CGColorGetConstantColor(kCGColorBlack);
+        self.layer.opaque = false;
+        self.layer.backgroundColor = [NSColor clearColor].CGColor;
+        // 
     }
 
     SDL_SendWindowEvent(_sdlWindow, SDL_WINDOWEVENT_EXPOSED, 0, 0);
@@ -1550,7 +1560,12 @@ Cocoa_SendMouseButtonClicks(SDL_Mouse * mouse, NSEvent *theEvent, SDL_Window * w
     /* Force the graphics context to clear to black so we don't get a flash of
        white until the app is ready to draw. In practice on modern macOS, this
        only gets called for window creation and other extraordinary events. */
-    self.layer.backgroundColor = CGColorGetConstantColor(kCGColorBlack);
+    
+    // D4
+    // self.layer.backgroundColor = CGColorGetConstantColor(kCGColorBlack);    
+    self.layer.opaque = false;
+    self.layer.backgroundColor = [NSColor clearColor].CGColor;
+
     ScheduleContextUpdates((__bridge SDL_WindowData *) _sdlWindow->driverdata);
     SDL_SendWindowEvent(_sdlWindow, SDL_WINDOWEVENT_EXPOSED, 0, 0);
 }
